@@ -1,4 +1,4 @@
-package code44_dpStateCompression;
+package code44_dpStateCompression_$Hard$;
 
 /// https://leetcode.com/problems/can-i-win/
 /// 在 "Can I Win" 游戏中，有两个玩家轮流选择从数字 1 到 maxChoosableInteger 中的任意一个数字，每个数字只能被选择一次。

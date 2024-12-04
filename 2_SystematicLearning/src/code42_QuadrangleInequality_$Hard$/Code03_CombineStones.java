@@ -1,4 +1,4 @@
-package code42_QuadrangleInequality;
+package code42_QuadrangleInequality_$Hard$;
 
 
 /// 题目三：

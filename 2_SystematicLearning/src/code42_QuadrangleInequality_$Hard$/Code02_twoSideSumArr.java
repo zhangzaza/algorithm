@@ -1,4 +1,4 @@
-package code42_QuadrangleInequality;
+package code42_QuadrangleInequality_$Hard$;
 
 /// 题目一：
 /// 给定一个非负数组arr，长度为N

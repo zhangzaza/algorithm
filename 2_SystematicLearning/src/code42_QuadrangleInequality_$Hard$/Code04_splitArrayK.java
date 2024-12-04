@@ -1,4 +1,4 @@
-package code42_QuadrangleInequality;
+package code42_QuadrangleInequality_$Hard$;
 // 分割数组的最大值(画匠问题)
 // 给定一个非负整数数组 nums 和一个整数 m
 // 你需要将这个数组分成 m 个非空的连续子数组。

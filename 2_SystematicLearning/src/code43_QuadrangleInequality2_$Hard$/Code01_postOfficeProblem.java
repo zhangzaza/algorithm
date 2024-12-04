@@ -1,4 +1,4 @@
-package code43_QuadrangleInequality2;
+package code43_QuadrangleInequality2_$Hard$;
 
 
 /// 邮局问题（Post Office Problem）是一类经典的动态规划问题，
