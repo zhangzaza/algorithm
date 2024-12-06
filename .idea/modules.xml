@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/1_Beginner/1_Beginner.iml" filepath="$PROJECT_DIR$/1_Beginner/1_Beginner.iml" />
       <module fileurl="file://$PROJECT_DIR$/2_SystematicLearning/2_SystematicLearning.iml" filepath="$PROJECT_DIR$/2_SystematicLearning/2_SystematicLearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3_PracticeProblems/3_PracticeProblems.iml" filepath="$PROJECT_DIR$/3_PracticeProblems/3_PracticeProblems.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/algorithmZ.iml" filepath="$PROJECT_DIR$/.idea/algorithmZ.iml" />
     </modules>
   </component>
