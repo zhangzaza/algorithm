@@ -2,9 +2,14 @@ package code02;
 
 import java.util.Arrays;
 
+/// 现有司机N*2人，调度中心会将所有司机平分给A，B两个区域
+/// 第i个司机去A可得收入为income[i][0]
+/// 第i个司机去B可得收入为income[i][1]
+/// 返回所有调度方案红能使所有司机总收入最高的方案，是多少钱
+
 public class Code04_Drive {
 
-	// 课上的现场版本
+	/// 1.暴力递归
 	// income -> N * 2 的矩阵 N是偶数！
 	// 0 [9, 13]
 	// 1 [45,60]
@@ -18,16 +23,17 @@ public class Code04_Drive {
 	}
 
 	// index.....所有的司机，往A和B区域分配！
-	// A区域还有rest个名额!
+	// A区域还有rest个名额! 「rest到最后一定要变成0」
 	// 返回把index...司机，分配完，并且最终A和B区域同样多的情况下，index...这些司机，整体收入最大是多少！
 	public static int process1(int[][] income, int index, int rest) {
 		if (index == income.length) {
 			return 0;
 		}
-		// 还剩下司机！
+		// income.length - index 未安排的司机 刚刚好 和要去A的区域相同，全部分配给A
 		if (income.length - index == rest) {
 			return income[index][0] + process1(income, index + 1, rest - 1);
 		}
+		// A区域还有0个名额，不分配给A，全部给B
 		if (rest == 0) {
 			return income[index][1] + process1(income, index + 1, rest);
 		}
@@ -36,6 +42,9 @@ public class Code04_Drive {
 		int p2 = income[index][1] + process1(income, index + 1, rest);
 		return Math.max(p1, p2);
 	}
+
+
+
 
 	// 严格位置依赖的动态规划版本
 	public static int maxMoney2(int[][] income) {
