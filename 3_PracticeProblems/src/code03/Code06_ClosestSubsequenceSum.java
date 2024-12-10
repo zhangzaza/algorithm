@@ -3,7 +3,10 @@ package code03;
 import java.util.Arrays;
 
 // 本题测试链接 : https://leetcode.com/problems/closest-subsequence-sum/
-// 本题数据量描述:
+/// 给定一个整数数组 nums 和一个目标值 goal，你需要找到一个子序列，使得这个子序列的和最接近 goal。你的任务是返回这个最接近的和与 goal 之间的绝对差。
+/// 需要确定数组上的每个数字要或者不要
+// 子序列：可以不连续 ； 子数组：需要连续不间断
+/// 本题数据量描述:「需要这个数据范围」
 // 1 <= nums.length <= 40
 // -10^7 <= nums[i] <= 10^7
 // -10^9 <= goal <= 10^9

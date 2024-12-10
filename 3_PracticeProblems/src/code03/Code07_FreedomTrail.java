@@ -7,6 +7,9 @@ import java.util.TreeSet;
 // 本题测试链接 : https://leetcode.com/problems/freedom-trail/
 public class Code07_FreedomTrail {
 
+
+
+
 	// 提交时把findRotateSteps1方法名字改成findRotateSteps可以直接通过
 	public static int findRotateSteps1(String r, String k) {
 		char[] ring = r.toCharArray();
@@ -28,16 +31,47 @@ public class Code07_FreedomTrail {
 				dp[i][j] = -1;
 			}
 		}
-		return process(0, 0, str, map, N, dp);
+		return process1(0, 0, str, map, N, dp);
 	}
 
+
+	/// 1.暴力递归的方式
+	public static int process(int preButton,
+							  int index,
+							  char[] str,
+							  HashMap<Character, ArrayList<Integer>> map,
+							  int N){
+		if (index==str.length){
+			return 0;
+		}
+
+		// 还有字符需要搞定呢！
+		char cur = str[index];
+		int ans = Integer.MAX_VALUE;
+		ArrayList<Integer> nextPositions = map.get(cur);//下一步要去的位置
+		for (int next : nextPositions) {
+			int cost = dial(preButton, next, N) //拨号的代价，走过多少步到达我们想要的字符
+					+ 1 //确认的代价
+					+ process(next, index + 1, str, map, N);
+			ans = Math.min(ans, cost);
+		}
+		return ans;
+
+	}
+
+
+	/// 2.加了缓存
 	// 电话里：指针指着的上一个按键preButton
 	// 目标里：此时要搞定哪个字符？keyIndex
 	// map : key 一种字符 value: 哪些位置拥有这个字符
 	// N: 电话大小
 	// f(0, 0, aim, map, N)
-	public static int process(int preButton, int index, char[] str, HashMap<Character, ArrayList<Integer>> map, int N,
-			int[][] dp) {
+	public static int process1(int preButton,
+							  int index,
+							  char[] str,
+							  HashMap<Character, ArrayList<Integer>> map,
+							  int N,
+							  int[][] dp) {
 		if (dp[preButton][index] != -1) {
 			return dp[preButton][index];
 		}
@@ -47,9 +81,11 @@ public class Code07_FreedomTrail {
 		} else {
 			// 还有字符需要搞定呢！
 			char cur = str[index];
-			ArrayList<Integer> nextPositions = map.get(cur);
+			ArrayList<Integer> nextPositions = map.get(cur);//下一步要去的位置
 			for (int next : nextPositions) {
-				int cost = dial(preButton, next, N) + 1 + process(next, index + 1, str, map, N, dp);
+				int cost = dial(preButton, next, N) //拨号的代价，走过多少步到达我们想要的字符
+						+ 1 //确认的代价
+						+ process1(next, index + 1, str, map, N, dp);
 				ans = Math.min(ans, cost);
 			}
 		}
@@ -60,6 +96,11 @@ public class Code07_FreedomTrail {
 	public static int dial(int i1, int i2, int size) {
 		return Math.min(Math.abs(i1 - i2), Math.min(i1, i2) + size - Math.max(i1, i2));
 	}
+
+
+
+
+
 
 	// 以下方法来自陆振星同学
 	// 可以省掉枚举行为
