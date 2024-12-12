@@ -1,6 +1,10 @@
 package code04;
 
 // 本题测试链接 : https://leetcode.com/problems/interleaving-string/
+// https://leetcode.cn/problems/interleaving-string/description/
+///给定三个字符串 s1、s2、s3，判断 s3 是否是由 s1 和 s2 交错组成的。两个字符串 s 和 t 交错的定义为：
+/// s = s₁ + s₂ +... + sₙ，t = t₁ + t₂ +... + tₘ，且 |n - m| <= 1。
+/// 交错形式可以是 s₁ + t₁ + s₂ + t₂ + s₃ + t₃ +... 或者 t₁ + s₁ + t₂ + s₂ + t₃ + s₃ +...（其中 a + b 表示字符串 a 和 b 的连接）。
 public class Code07_InterleavingString {
 
 	public static boolean isInterleave(String s1, String s2, String s3) {
@@ -30,18 +34,9 @@ public class Code07_InterleavingString {
 		for (int i = 1; i <= str1.length; i++) {
 			for (int j = 1; j <= str2.length; j++) {
 				if (
-						(str1[i - 1] == str3[i + j - 1] && dp[i - 1][j])
-						
-						
-						
-						
-						|| 
-						
-						
-						
-						(str2[j - 1] == str3[i + j - 1] && dp[i][j - 1])
-						
-						
+						(str1[i - 1] == str3[i + j - 1] && dp[i - 1][j]) // 可能性1
+						||
+						(str2[j - 1] == str3[i + j - 1] && dp[i][j - 1]) // 可能性2
 						) {
 					dp[i][j] = true;
 				}
