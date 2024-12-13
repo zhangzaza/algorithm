@@ -19,7 +19,7 @@ public class Code01_Hash {
         return DatatypeConverter.printHexBinary(hash.digest(input.getBytes()));
     }
 
-    public static class DatatypeConverter {
+    public class DatatypeConverter {
         public static String printHexBinary(byte[] data) {
             StringBuilder hex = new StringBuilder();
             for (byte b : data) {
