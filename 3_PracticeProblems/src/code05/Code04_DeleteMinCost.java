@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-// 直接看minCostX方法是最优解，时间复杂度O(N*M)
-// 这是来自陆振星同学提供的最优解
-// 比课上讲的解还要好！
-// 而且是时间复杂度O(N*M)的方法
-// 强烈推荐同学们看懂，有解释也不难看懂
+/// 题目：
+/// 给定两个字符串s1和s2，问s2最少删除多少字符可以成为s1的子串？
+/// 比如 s1 = "abcde"，s2 = "axbc"
+/// 返回 1
 // 链接 : https://www.mashibing.com/question/detail/68090
 public class Code04_DeleteMinCost {
 
-	// 题目：
-	// 给定两个字符串s1和s2，问s2最少删除多少字符可以成为s1的子串？
-	// 比如 s1 = "abcde"，s2 = "axbc"
-	// 返回 1
 
-	// 解法一
+
+
+	/// 1.解法一
 	// 求出str2所有的子序列，然后按照长度排序，长度大的排在前面。
 	// 然后考察哪个子序列字符串和s1的某个子串相等(KMP)，答案就出来了。
 	// 分析：
@@ -44,6 +41,15 @@ public class Code04_DeleteMinCost {
 		process(str2, index + 1, path + str2[index], list);
 	}
 
+	public static class LenComp implements Comparator<String> {
+		@Override
+		public int compare(String o1, String o2) {
+			return o2.length() - o1.length();
+		}
+
+	}
+
+	/// 2.dp
 	// x字符串只通过删除的方式，变到y字符串
 	// 返回至少要删几个字符
 	// 如果变不成，返回Integer.Max
@@ -51,6 +57,8 @@ public class Code04_DeleteMinCost {
 		if (x.length < y.length) {
 			return Integer.MAX_VALUE;
 		}
+
+		//1.初始化
 		int N = x.length;
 		int M = y.length;
 		int[][] dp = new int[N + 1][M + 1];
@@ -60,15 +68,21 @@ public class Code04_DeleteMinCost {
 			}
 		}
 		dp[0][0] = 0;
+
+		//2.填好第一列
 		// dp[i][j]表示前缀长度
 		for (int i = 1; i <= N; i++) {
 			dp[i][0] = i;
 		}
+
+		//3.dp表状态转移
 		for (int xlen = 1; xlen <= N; xlen++) {
 			for (int ylen = 1; ylen <= Math.min(M, xlen); ylen++) {
+				//3.1.如果前面上个位置中有效，那么需要再删除新的数字即可
 				if (dp[xlen - 1][ylen] != Integer.MAX_VALUE) {
 					dp[xlen][ylen] = dp[xlen - 1][ylen] + 1;
 				}
+				//3.2.如果新判断的字符和前面那个字符相等，并且前面那个有效，那么dp[xlen][ylen] = dp[xlen-1][ylen-1]
 				if (x[xlen - 1] == y[ylen - 1] && dp[xlen - 1][ylen - 1] != Integer.MAX_VALUE) {
 					dp[xlen][ylen] = Math.min(dp[xlen][ylen], dp[xlen - 1][ylen - 1]);
 				}
@@ -77,19 +91,13 @@ public class Code04_DeleteMinCost {
 		return dp[N][M];
 	}
 
-	public static class LenComp implements Comparator<String> {
 
-		@Override
-		public int compare(String o1, String o2) {
-			return o2.length() - o1.length();
-		}
 
-	}
 
-	// 解法二
+
+	/// 3.如果s1的长度较小，s2长度较大，这个方法比较合适
 	// 生成所有s1的子串
 	// 然后考察每个子串和s2的编辑距离(假设编辑距离只有删除动作且删除一个字符的代价为1)
-	// 如果s1的长度较小，s2长度较大，这个方法比较合适
 	public static int minCost2(String s1, String s2) {
 		if (s1.length() == 0 || s2.length() == 0) {
 			return s2.length();
@@ -143,7 +151,7 @@ public class Code04_DeleteMinCost {
 		return dp[row - 1][col - 1];
 	}
 
-	// 解法二的优化
+	/// 4. 第3方法的优化
 	public static int minCost3(String s1, String s2) {
 		if (s1.length() == 0 || s2.length() == 0) {
 			return s2.length();
@@ -182,12 +190,7 @@ public class Code04_DeleteMinCost {
 		return ans;
 	}
 
-	// 来自学生的解，最优解
-	// 比课上讲的解还要好！
-	// 这是时间复杂度O(N*M)的方法
-	// 强烈推荐同学们看懂，有解释也不难看懂
-	// 感谢陆振星同学提供的方法
-	// 链接 : https://www.mashibing.com/question/detail/68090
+	// 最优解
 	public static int minCostX(String s1, String s2) {
 		char[] c1 = s1.toCharArray();
 		char[] c2 = s2.toCharArray();
