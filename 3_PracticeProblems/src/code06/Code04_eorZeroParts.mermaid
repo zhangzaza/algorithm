@@ -1,0 +1,9 @@
+flowchart TD
+    A[开始] --> B[初始化 L 和 ans]
+    B --> C{遍历 parts 列表}
+    C -->|取下一个 end| D{计算异或和}
+    D -->|异或和为0| E[ans++]
+    E --> F[更新 L 为 end]
+    F --> C
+    D -->|异或和不为0| F
+    C -->|遍历结束| G[返回 ans]
