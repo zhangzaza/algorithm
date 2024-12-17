@@ -2,14 +2,13 @@ package code07;
 
 import java.util.HashSet;
 
-public class Code05_WorldBreak {
-	/*
-	 * 
-	 * 假设所有字符都是小写字母. 大字符串是str. arr是去重的单词表, 每个单词都不是空字符串且可以使用任意次.
-	 * 使用arr中的单词有多少种拼接str的方式. 返回方法数.
-	 * 
-	 */
 
+/// 假设所有字符都是小写字母. 大字符串是str. arr是去重的单词表, 每个单词都不是空字符串且可以使用任意次.
+/// 使用arr中的单词有多少种拼接str的方式. 返回方法数.
+public class Code05_WorldBreak {
+
+
+	/// 1.暴力解「O(N^3)」
 	public static int ways(String str, String[] arr) {
 		HashSet<String> set = new HashSet<>();
 		for (String candidate : arr) {
@@ -36,6 +35,8 @@ public class Code05_WorldBreak {
 		return ways;
 	}
 
+
+	/// 1-2.添加了判断条件
 	public static int ways1(String str, String[] arr) {
 		if (str == null || str.length() == 0 || arr == null || arr.length == 0) {
 			return 0;
@@ -60,6 +61,8 @@ public class Code05_WorldBreak {
 		return ways;
 	}
 
+
+	/// 1-3.动态规划
 	public static int ways2(String str, String[] arr) {
 		if (str == null || str.length() == 0 || arr == null || arr.length == 0) {
 			return 0;
@@ -81,6 +84,8 @@ public class Code05_WorldBreak {
 		return dp[0];
 	}
 
+
+	/// 2.使用前缀树「时间复杂度：O(M)+O(N^2)」
 	public static class Node {
 		public boolean end;
 		public Node[] nexts;
@@ -91,10 +96,13 @@ public class Code05_WorldBreak {
 		}
 	}
 
+
 	public static int ways3(String str, String[] arr) {
 		if (str == null || str.length() == 0 || arr == null || arr.length == 0) {
 			return 0;
 		}
+
+		// 生成前缀树
 		Node root = new Node();
 		for (String s : arr) {
 			char[] chs = s.toCharArray();
@@ -109,6 +117,7 @@ public class Code05_WorldBreak {
 			}
 			node.end = true;
 		}
+
 		return g(str.toCharArray(), root, 0);
 	}
 
@@ -123,9 +132,12 @@ public class Code05_WorldBreak {
 		// i...end
 		for (int end = i; end < str.length; end++) {
 			int path = str[end] - 'a';
+
+			// 如果前缀树上没有这个路径，就跳出循环：指的是没有这个单词 「大字符串是str. arr是去重的单词表」
 			if (cur.nexts[path] == null) {
 				break;
 			}
+
 			cur = cur.nexts[path];
 			if (cur.end) { // i...end
 				ways += g(str, root, end + 1);

@@ -2,9 +2,19 @@ package code07;
 
 import java.util.HashMap;
 
+
+/// 题目描述
+/// 给定一个字符串 str，一个整数 K，以及两个数组 parts 和 record，其中 parts 数组中的每个元素是一个字符串，record 数组中的每个元素是一个整数，表示 parts 中对应字符串的值。目标是将字符串 str 分割成最多 K 个子串，使得这些子串的值之和最大。
+/// 输入
+/// str：待分割的字符串。
+/// K：允许的最大分割次数。
+/// parts：可分割的部分数组。
+/// record：每个部分对应的值数组。
+/// 输出
+/// 返回分割后的子串值之和的最大值。如果无法完成分割，则返回 -1。
 public class Code06_SplitStringMaxValue {
 
-	// 暴力解
+	/// 1.暴力解
 	public static int maxRecord1(String str, int K, String[] parts, int[] record) {
 		if (str == null || str.length() == 0) {
 			return 0;
@@ -16,6 +26,13 @@ public class Code06_SplitStringMaxValue {
 		return process(str, 0, K, records);
 	}
 
+
+	//如果当前索引 index 等于字符串长度，检查剩余分割次数是否为 0，如果是则返回 0，否则返回 -1。
+	//初始化结果变量 ans 为 -1。
+	//遍历从 index 到字符串末尾的所有子串 first：
+	//如果 first 在 records 中存在，递归调用 process 处理剩余部分。
+	//更新 ans 为当前最大值。
+	//返回 ans。
 	public static int process(String str, int index, int rest, HashMap<String, Integer> records) {
 		if (rest < 0) {
 			return -1;
@@ -34,7 +51,7 @@ public class Code06_SplitStringMaxValue {
 		return ans;
 	}
 
-	// 动态规划解
+	/// 2.动态规划解
 	public static int maxRecord2(String str, int K, String[] parts, int[] record) {
 		if (str == null || str.length() == 0) {
 			return 0;
@@ -64,7 +81,7 @@ public class Code06_SplitStringMaxValue {
 		return dp[0][K];
 	}
 
-	// 动态规划解 + 前缀树优化
+	/// 3.动态规划解 + 前缀树优化
 	public static int maxRecord3(String s, int K, String[] parts, int[] record) {
 		if (s == null || s.length() == 0) {
 			return 0;
