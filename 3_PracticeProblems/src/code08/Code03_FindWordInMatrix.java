@@ -17,6 +17,27 @@ package code08;
 /// 写出两种设定下的code
 public class Code03_FindWordInMatrix {
 
+	/// 1.暴力递归：调用的时候需要调用每一个位置的字符 canLoop(i,j,0)，判断是否能找到，时间复杂度O(N^4)
+	// 可以走重复路
+	// 从m[i][j]这个字符出发，能不能找到str[k...]这个后缀串
+	public static boolean canLoop(char[][] m, int i, int j, char[] str, int k) {
+		if (k == str.length) {
+			return true;
+		}
+		if (i == -1 || i == m.length || j == -1 || j == m[0].length || m[i][j] != str[k]) {
+			return false;
+		}
+		// 不越界！m[i][j] == str[k] 对的上的！
+		// str[k+1....]
+		boolean ans = false;
+		if (canLoop(m, i + 1, j, str, k + 1) || canLoop(m, i - 1, j, str, k + 1) || canLoop(m, i, j + 1, str, k + 1)
+				|| canLoop(m, i, j - 1, str, k + 1)) {
+			ans = true;
+		}
+		return ans;
+	}
+
+	/// 2.傻缓存
 	// 可以走重复的设定
 	public static boolean findWord1(char[][] m, String word) {
 		if (word == null || word.equals("")) {
@@ -53,45 +74,6 @@ public class Code03_FindWordInMatrix {
 		return false;
 	}
 
-	// 可以走重复路
-	// 从m[i][j]这个字符出发，能不能找到str[k...]这个后缀串
-	public static boolean canLoop(char[][] m, int i, int j, char[] str, int k) {
-		if (k == str.length) {
-			return true;
-		}
-		if (i == -1 || i == m.length || j == -1 || j == m[0].length || m[i][j] != str[k]) {
-			return false;
-		}
-		// 不越界！m[i][j] == str[k] 对的上的！
-		// str[k+1....]
-		boolean ans = false;
-		if (canLoop(m, i + 1, j, str, k + 1) || canLoop(m, i - 1, j, str, k + 1) || canLoop(m, i, j + 1, str, k + 1)
-				|| canLoop(m, i, j - 1, str, k + 1)) {
-			ans = true;
-		}
-		return ans;
-	}
-
-	// 不能走重复路
-	// 从m[i][j]这个字符出发，能不能找到str[k...]这个后缀串
-	public static boolean noLoop(char[][] m, int i, int j, char[] str, int k) {
-		if (k == str.length) {
-			return true;
-		}
-		if (i == -1 || i == m.length || j == -1 || j == m[0].length || m[i][j] != str[k]) {
-			return false;
-		}
-		// 不越界！也不是回头路！m[i][j] == str[k] 也对的上！
-		m[i][j] = 0;
-		boolean ans = false;
-		if (noLoop(m, i + 1, j, str, k + 1) || noLoop(m, i - 1, j, str, k + 1) || noLoop(m, i, j + 1, str, k + 1)
-				|| noLoop(m, i, j - 1, str, k + 1)) {
-			ans = true;
-		}
-		m[i][j] = str[k];
-		return ans;
-	}
-
 	public static boolean checkPrevious(boolean[][][] dp, int i, int j, int k) {
 		boolean up = i > 0 ? (dp[i - 1][j][k - 1]) : false;
 		boolean down = i < dp.length - 1 ? (dp[i + 1][j][k - 1]) : false;
@@ -100,6 +82,37 @@ public class Code03_FindWordInMatrix {
 		return up || down || left || right;
 	}
 
+	/// 3.暴力递归
+	// 不能走重复路
+	// 从m[i][j]这个字符出发，能不能找到str[k...]这个后缀串
+	public static boolean noLoop(char[][] m, int i, int j, char[] str, int k) {
+		if (k == str.length) {
+			return true;
+		}
+		if (i == -1 || i == m.length || j == -1 || j == m[0].length || m[i][j] != str[k]
+				|| m[i][j] == 0) {/// 不能回头路
+			return false;
+		}
+		// 不越界！也不是回头路！m[i][j] == str[k] 也对的上！
+
+		///换成 0 ，只要不是 单词word 所包含的东西即可
+		m[i][j] = 0;
+
+		boolean ans = false;
+		if (noLoop(m, i + 1, j, str, k + 1) || noLoop(m, i - 1, j, str, k + 1) || noLoop(m, i, j + 1, str, k + 1)
+				|| noLoop(m, i, j - 1, str, k + 1)) {
+			ans = true;
+		}
+
+		///走完所有的路后进行恢复
+		m[i][j] = str[k];
+
+		return ans;
+	}
+
+
+
+	/// 3方法的调用
 	// 不可以走重复路的设定
 	public static boolean findWord2(char[][] m, String word) {
 		if (word == null || word.equals("")) {
