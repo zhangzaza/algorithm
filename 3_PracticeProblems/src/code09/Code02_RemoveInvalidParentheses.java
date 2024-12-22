@@ -4,6 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 测试链接 : https://leetcode.com/problems/remove-invalid-parentheses/
+// https://leetcode.cn/problems/remove-invalid-parentheses/
+///
+/// 题目描述
+/// 给定一个由若干括号（'(' 和 ')'）和字母组成的字符串 s，要求删除最小数量的无效括号，使输入的字符串有效，并返回所有可能的结果，答案可以按任意顺序返回。
+/// 示例
+/// 示例 1：
+/// 输入：s = "()())()"
+/// 输出：["(())()","()()()"]
+/// 示例 2：
+/// 输入：s = "(a)())()"
+/// 输出：["(a())()","(a)()()"]
+/// 示例 3：
+/// 输入：s = ")("
+/// 输出：[""]
+///
+/// 提示
+/// 1 <= s.length <= 25
+/// s 由小写英文字母以及括号 '(' 和 ')' 组成
+/// s 中至多含 20 个括号
+///
+/// 解题思路提示
+/// 1.由于不知道哪些括号可以被删除，所以尝试所有的选项，可使用递归方法。
+/// 2.在递归过程中，对于每个括号，可以选择使用它或者删除它。
+/// 3.递归会生成所有有效的括号字符串，但题目只需要删除最少括号数量的有效字符串。因此，可以先计算需要删除的无效括号数量，然后在递归中只生成有效的字符串。
 public class Code02_RemoveInvalidParentheses {
 
 	// 来自leetcode投票第一的答案，实现非常好，我们来赏析一下
@@ -32,7 +56,7 @@ public class Code02_RemoveInvalidParentheses {
 	// checkIndex = 6 ，modifyIndex = 4
 	// 也就是说，
 	// checkIndex和modifyIndex，分别表示查的开始 和 调的开始，之前的都不用管了  par  (  )
-	public static void remove(String s, List<String> ans, int checkIndex, int deleteIndex, char[] par) {
+	public static void remove(String s, List<String> ans, int checkIndex, int deleteIndex, char[] par) {//par ：'(', ')' 或者 ')', '('
 		for (int count = 0, i = checkIndex; i < s.length(); i++) {
 			if (s.charAt(i) == par[0]) {
 				count++;
@@ -46,14 +70,14 @@ public class Code02_RemoveInvalidParentheses {
 					// 比如
 					if (s.charAt(j) == par[1] && (j == deleteIndex || s.charAt(j - 1) != par[1])) {
 						remove(
-								s.substring(0, j) + s.substring(j + 1, s.length()),
+								s.substring(0, j) + s.substring(j + 1, s.length()),//拼接
 								ans, i, j, par);
 					}
 				}
 				return;
 			}
 		}
-		String reversed = new StringBuilder(s).reverse().toString();
+		String reversed = new StringBuilder(s).reverse().toString();//逆序
 		if (par[0] == '(') {
 			remove(reversed, ans, 0, 0, new char[] { ')', '(' });
 		} else {
