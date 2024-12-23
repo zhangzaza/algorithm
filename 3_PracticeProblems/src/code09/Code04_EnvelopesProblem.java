@@ -5,6 +5,14 @@ import java.util.Comparator;
 
 // 本题测试链接 : https://leetcode.com/problems/russian-doll-envelopes/
 // https://leetcode.cn/problems/russian-doll-envelopes/
+///给定一个二维整数数组 envelopes，其中每个元素 envelopes[i] = [wᵢ, hᵢ] 表示第 i 个信封的宽度和高度。当一个信封的宽度和高度都比另一个信封大时，该信封可以放入另一个信封中，如同俄罗斯套娃。要求计算最多能有多少个信封组成一组 “俄罗斯套娃” 信封（不允许旋转信封）。
+/// 2. 示例
+/// 示例 1：输入 envelopes = [[5,4],[6,4],[6,7],[2,3]]，输出 3，解释为最多信封个数为 3，组合为 [2,3] => [5,4] => [6,7]。
+/// 示例 2：输入 envelopes = [[1,1],[1,1],[1,1]]，输出 1。
+/// 3. 提示
+/// 1 <= envelopes.length <= 10^5。
+/// envelopes[i].length == 2。
+/// 1 <= wᵢ, hᵢ <= 10^5。
 public class Code04_EnvelopesProblem {
 
 	public static int maxEnvelopes(int[][] matrix) {

@@ -1,6 +1,22 @@
 package code09;
 
 // 本题测试链接 : https://leetcode.com/problems/longest-increasing-subsequence
+// https://leetcode.cn/problems/longest-increasing-subsequence
+///给定一个整数数组 nums，需要找到其中最长严格递增子序列的长度。子序列是由原数组派生而来，在不改变其余元素顺序的情况下删除（或不删除）数组中的元素所得到的序列。例如，[3,6,2,7] 是 [0,3,1,6,2,2,7] 的子序列。
+/// 示例
+/// 示例 1：
+/// 输入：nums = [10,9,2,5,3,7,101,18]
+/// 输出：4
+/// 解释：最长递增子序列是 [2,3,7,101]，其长度为 4。
+/// 示例 2：
+/// 输入：nums = [0,1,0,3,2,3]
+/// 输出：4
+/// 示例 3：
+/// 输入：nums = [7,7,7,7,7,7,7]
+/// 输出：1
+/// 提示
+/// 1 <= nums.length <= 2500
+/// -10^4 <= nums[i] <= 10^4
 public class Code03_LIS {
 
 	public static int lengthOfLIS(int[] arr) {
