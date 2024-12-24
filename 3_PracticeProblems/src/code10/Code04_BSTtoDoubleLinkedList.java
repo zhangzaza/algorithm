@@ -14,7 +14,8 @@ public class Code04_BSTtoDoubleLinkedList {
 		}
 	}
 
-	// 提交下面的代码
+
+	/// 二叉树的递归套路
 	public static Node treeToDoublyList(Node head) {
 		if (head == null) {
 			return null;
@@ -41,6 +42,8 @@ public class Code04_BSTtoDoubleLinkedList {
 		}
 		Info lInfo = process(X.left);
 		Info rInfo = process(X.right);
+
+		//整体进行操作
 		if (lInfo.end != null) {
 			lInfo.end.right = X;
 		}
@@ -49,6 +52,7 @@ public class Code04_BSTtoDoubleLinkedList {
 		if (rInfo.start != null) {
 			rInfo.start.left = X;
 		}
+
 		// 整体链表的头    lInfo.start != null ? lInfo.start : X
 		// 整体链表的尾    rInfo.end != null ? rInfo.end : X
 		return new Info(lInfo.start != null ? lInfo.start : X, rInfo.end != null ? rInfo.end : X);
