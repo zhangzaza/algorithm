@@ -25,6 +25,7 @@ import java.util.List;
 
 public class Code02_PalindromePartitioningII {
 
+	/// 问题一：一个字符串至少要切几刀能让切出来的字串都是回文串
 	// 测试链接只测了本题的第一问，直接提交可以通过
 	public static int minCut(String s) {
 		if (s == null || s.length() < 2) {
@@ -32,6 +33,8 @@ public class Code02_PalindromePartitioningII {
 		}
 		char[] str = s.toCharArray();
 		int N = str.length;
+
+		//判断每个范围内的字符是否是回文串
 		boolean[][] checkMap = createCheckMap(str, N);
 		int[] dp = new int[N + 1];
 		dp[N] = 0;
@@ -39,25 +42,31 @@ public class Code02_PalindromePartitioningII {
 			if (checkMap[i][N - 1]) {
 				dp[i] = 1;
 			} else {
+
+				//还要几刀
 				int next = Integer.MAX_VALUE;
 				for (int j = i; j < N; j++) {
 					if (checkMap[i][j]) {
 						next = Math.min(next, dp[j + 1]);
 					}
 				}
+
 				dp[i] = 1 + next;
 			}
 		}
-		return dp[0] - 1;
+		return dp[0] - 1;//部分数-1 = 刀数
 	}
 
 	public static boolean[][] createCheckMap(char[] str, int N) {
 		boolean[][] ans = new boolean[N][N];
 		for (int i = 0; i < N - 1; i++) {
+			//对角线都是ture
 			ans[i][i] = true;
+			//倒数第二条对角线，两个字符相等就是true，两个字符不相等就是false
 			ans[i][i + 1] = str[i] == str[i + 1];
 		}
-		ans[N - 1][N - 1] = true;
+		ans[N - 1][N - 1] = true;//因为上面的循环这个位置没有进行判断
+
 		for (int i = N - 3; i >= 0; i--) {
 			for (int j = i + 2; j < N; j++) {
 				ans[i][j] = str[i] == str[j] && ans[i + 1][j - 1];
@@ -67,6 +76,7 @@ public class Code02_PalindromePartitioningII {
 	}
 
 
+	/// 问题二：返回问题一的其中一种划分结果「回溯」
 	// 本题第二问，返回其中一种结果
 	public static List<String> minCutOneWay(String s) {
 		List<String> ans = new ArrayList<>();
@@ -104,6 +114,7 @@ public class Code02_PalindromePartitioningII {
 	}
 
 
+	/// 问题三：返回问题一的所有划分结果
 	// 本题第三问，返回所有结果
 	public static List<List<String>> minCutAllWays(String s) {
 		List<List<String>> ans = new ArrayList<>();
@@ -136,23 +147,23 @@ public class Code02_PalindromePartitioningII {
 	}
 
 	// s[0....i-1]  存到path里去了
-	// s[i..j-1]考察的分出来的第一份
+	// s[i..j-1] 考察的分出来的第一份
 	public static void process(String s, int i, int j, boolean[][] checkMap, int[] dp, 
 			List<String> path,
 			List<List<String>> ans) {
-		if (j == s.length()) { // s[i...N-1]
-			if (checkMap[i][j - 1] && dp[i] == dp[j] + 1) {
+		if (j == s.length()) { // s[i...N-1]。 已经来到了终止位置
+			if (checkMap[i][j - 1] && dp[i] == dp[j] + 1) { // 1.回文，并且 +1 关系
+				path.add(s.substring(i, j));//添加一个路径
+				ans.add(copyStringList(path));//拷贝放到ans中
+				path.remove(path.size() - 1);//还原现场
+			}
+		} else {// s[i...j-1]。 还有路径
+			if (checkMap[i][j - 1] && dp[i] == dp[j] + 1) {// 1.回文，并且 +1 关系
 				path.add(s.substring(i, j));
-				ans.add(copyStringList(path));
+				process(s, j, j + 1, checkMap, dp, path, ans); // 跑后续的process
 				path.remove(path.size() - 1);
 			}
-		} else {// s[i...j-1]
-			if (checkMap[i][j - 1] && dp[i] == dp[j] + 1) {
-				path.add(s.substring(i, j));
-				process(s, j, j + 1, checkMap, dp, path, ans);
-				path.remove(path.size() - 1);
-			}
-			process(s, i, j + 1, checkMap, dp, path, ans);
+			process(s, i, j + 1, checkMap, dp, path, ans);// 1.回文，并且 +1 关系 这两个关系检查不差，就单纯的 j++
 		}
 	}
 
