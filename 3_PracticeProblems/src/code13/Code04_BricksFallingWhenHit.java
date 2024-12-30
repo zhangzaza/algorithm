@@ -28,15 +28,20 @@ package code13;
 /// 所有 (xᵢ, yᵢ) 都是唯一的。
 public class Code04_BricksFallingWhenHit {
 
+
+
 	public static int[] hitBricks(int[][] grid, int[][] hits) {
+		// 1.打中炮弹之后 调整为了2之后的 矩阵
 		for (int i = 0; i < hits.length; i++) {
 			if (grid[hits[i][0]][hits[i][1]] == 1) {
 				grid[hits[i][0]][hits[i][1]] = 2;
 			}
 		}
+		// 2.建立并查集合，里面进行 初始化空间和连接
 		UnionFind unionFind = new UnionFind(grid);
 		int[] ans = new int[hits.length];
 		for (int i = hits.length - 1; i >= 0; i--) {
+			// 3.倒序遍历打中炮弹的位置，更新天花板的连接砖块数量
 			if (grid[hits[i][0]][hits[i][1]] == 2) {
 				ans[i] = unionFind.finger(hits[i][0], hits[i][1]);
 			}
@@ -44,7 +49,7 @@ public class Code04_BricksFallingWhenHit {
 		return ans;
 	}
 
-	// 并查集
+	/// 并查集「类」
 	public static class UnionFind {
 		private int N;
 		private int M;
@@ -58,12 +63,16 @@ public class Code04_BricksFallingWhenHit {
 		private int[] sizeMap;
 		private int[] stack;
 
+		// 创建并查集合的时候调用
 		public UnionFind(int[][] matrix) {
+			// 1.初始化空间
 			initSpace(matrix);
+			// 2.初始化连接
 			initConnect();
 		}
 
 		private void initSpace(int[][] matrix) {
+			// 1.初始化原始矩阵
 			grid = matrix;
 			N = grid.length;
 			M = grid[0].length;
@@ -99,6 +108,7 @@ public class Code04_BricksFallingWhenHit {
 			}
 		}
 
+		// 代表点
 		private int find(int row, int col) {
 			int stackSize = 0;
 			int index = row * M + col;
@@ -113,10 +123,11 @@ public class Code04_BricksFallingWhenHit {
 		}
 
 		private void union(int r1, int c1, int r2, int c2) {
-			if (valid(r1, c1) && valid(r2, c2)) {
+			if (valid(r1, c1) && valid(r2, c2)) { // 检查有效性
 				int father1 = find(r1, c1);
 				int father2 = find(r2, c2);
-				if (father1 != father2) {
+				if (father1 != father2) {//不是一个代表点才会进行合并
+					// 下述是并查集的常规操作
 					int size1 = sizeMap[father1];
 					int size2 = sizeMap[father2];
 					boolean status1 = cellingSet[father1];
@@ -124,16 +135,16 @@ public class Code04_BricksFallingWhenHit {
 					if (size1 <= size2) {
 						fatherMap[father1] = father2;
 						sizeMap[father2] = size1 + size2;
-						if (status1 ^ status2) {
+						if (status1 ^ status2) {// 一个是天花板集合，一个不是天花板集合
 							cellingSet[father2] = true;
-							cellingAll += status1 ? size2 : size1;
+							cellingAll += status1 ? size2 : size1;// 一个是天花板集合，一个不是天花板集合
 						}
 					} else {
 						fatherMap[father2] = father1;
 						sizeMap[father1] = size1 + size2;
-						if (status1 ^ status2) {
+						if (status1 ^ status2) {// 一个是天花板集合，一个不是天花板集合
 							cellingSet[father1] = true;
-							cellingAll += status1 ? size2 : size1;
+							cellingAll += status1 ? size2 : size1;// 一个是天花板集合，一个不是天花板集合
 						}
 					}
 				}
@@ -163,9 +174,11 @@ public class Code04_BricksFallingWhenHit {
 			union(row, col, row, col - 1);
 			union(row, col, row, col + 1);
 			int now = cellingAll;
-			if (row == 0) {
+
+			// 返回打落的砖块数量
+			if (row == 0) {//炮弹打在第0行「看图8」
 				return now - pre;
-			} else {
+			} else {//炮弹没有打在第0行「看图9」
 				return now == pre ? 0 : now - pre - 1;
 			}
 		}

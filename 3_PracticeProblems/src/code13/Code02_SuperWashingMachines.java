@@ -2,6 +2,7 @@ package code13;
 
 // 本题测试链接 : https://leetcode.com/problems/super-washing-machines/
 // https://leetcode.cn/problems/super-washing-machines/
+/// 「贪心思想」
 /// 假设有 n 台超级洗衣机排成一排，每台洗衣机初始时可能有一定数量的衣物或为空。
 /// 每一步操作可以选择任意 m（1 <= m <= n）台洗衣机，将每台所选洗衣机中的一件衣服送到相邻的洗衣机。
 /// 给定一个整数数组 machines 表示从左至右每台洗衣机中的衣物数量，要求计算出使所有洗衣机中剩余衣物数量相等的最少操作步数，如果无法实现则返回 -1。
@@ -43,7 +44,7 @@ public class Code02_SuperWashingMachines {
 		int ans = 0;
 		for (int i = 0; i < arr.length; i++) {
 			int leftRest = leftSum - i * avg;
-			int rightRest = (sum - leftSum - arr[i]) - (size - i - 1) * avg;
+			int rightRest = (sum - leftSum - arr[i]) - (size - i - 1) * avg; // 右侧拥有的衣服 - (总洗衣机 - 当前洗衣机 - 1) * 平均值
 			if (leftRest < 0 && rightRest < 0) {
 				ans = Math.max(ans, Math.abs(leftRest) + Math.abs(rightRest));
 			} else {
