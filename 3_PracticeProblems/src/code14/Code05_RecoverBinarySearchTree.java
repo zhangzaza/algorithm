@@ -3,6 +3,24 @@ package code14;
 import java.util.Stack;
 
 // 本题测试链接 : https://leetcode.com/problems/recover-binary-search-tree/
+/// 给定一棵二叉搜索树（BST）的根节点 root，其中恰好有两个节点的值被错误地交换了。要求在不改变树结构的情况下恢复这棵树。
+///
+/// 示例
+/// 示例 1：
+/// 输入：root = [1,3,null,null,2]
+/// 输出：[3,1,null,null,2]
+/// 解释：因为在二叉搜索树中 3 不能是 1 的左子节点（3 > 1），交换 1 和 3 可使树恢复为有效的二叉搜索树。
+/// 示例 2：
+/// 输入：root = [3,1,4,null,null,2]（以树状结构呈现，3 为根节点，1 为左子节点，4 为右子节点，2 为 4 的左子节点）
+/// 输出：[2,1,4,null,null,3]
+/// 解释：2 不能在 3 的右子树中（2 < 3），交换 2 和 3 可使树有效。
+///
+/// 约束条件
+/// 树中的节点数量范围是 [2, 1000]。
+/// -2^31 <= Node.val <= 2^31 - 1。
+///
+/// 后续跟进
+/// 使用 O(n) 空间的解决方案比较直接，询问是否能设计出常数 O(1) 空间的解决方案。
 public class Code05_RecoverBinarySearchTree {
 
 	// 不要提交这个类
@@ -27,6 +45,19 @@ public class Code05_RecoverBinarySearchTree {
 		}
 	}
 
+
+	/**
+	 * 这段代码的功能是修复二叉搜索树（BST）中两个错误交换位置的节点。具体步骤如下：
+	 * 1.定义TreeNode类：用于表示二叉树的节点，包含节点值val和左右子节点left、right。
+	 * 2.recoverTree方法：调用twoErrors方法找到两个错误节点，并交换它们的值。
+	 * 3.twoErrors方法：通过Morris遍历找到两个错误节点，返回这两个节点。
+	 *
+	 * twoErrors方法逻辑复杂度较高，分点描述：
+	 * - 使用Morris遍历避免额外空间开销。
+	 * - 记录前驱节点pre，检查当前节点cur与前驱节点的值是否满足BST性质。
+	 * - 如果发现不满足BST性质的节点对，则记录为错误节点e1和e2。
+	 * - 最终返回两个错误节点。
+	 */
 	public static TreeNode[] twoErrors(TreeNode head) {
 		TreeNode[] ans = new TreeNode[2];
 		if (head == null) {
@@ -63,6 +94,7 @@ public class Code05_RecoverBinarySearchTree {
 		return ans;
 	}
 
+	/// 没有兴趣就跳过
 	// 以下的方法，提交leetcode是通过不了的，但那是因为leetcode的验证方式有问题
 	// 但其实！以下的方法，才是正路！在结构上彻底交换两个节点，而不是值交换
 	public static TreeNode recoverTree2(TreeNode head) {

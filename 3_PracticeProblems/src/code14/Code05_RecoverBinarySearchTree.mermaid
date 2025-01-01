@@ -1,0 +1,17 @@
+flowchart TD
+    A[开始] --> B{head为空?}
+    B -->|Yes| C[返回空数组]
+    B -->|No| D[初始化变量]
+    D --> E[进入循环 cur不为空?]
+    E -->|Yes| F{cur.left为空?}
+    F -->|Yes| G[更新pre, cur=cur.right]
+    F -->|No| H[找到最右节点]
+    H --> I{mostRight.right为空?}
+    I -->|Yes| J[建立临时链接, cur=cur.left]
+    I -->|No| K[断开临时链接]
+    K --> L{pre.val >= cur.val?}
+    L -->|Yes| M[记录错误节点]
+    L -->|No| N[更新pre, cur=cur.right]
+    M --> N
+    N --> E
+    E -->|No| O[返回错误节点数组]
