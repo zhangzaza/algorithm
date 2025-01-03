@@ -1,0 +1,11 @@
+flowchart TD
+    A[开始] --> B{数组为空或长度小于2}
+    B -->|Yes| C[返回0]
+    B -->|No| D[初始化bestbuy和bestsell]
+    D --> E[遍历每一天的价格]
+    E --> F{是否为最后一天}
+    F -->|No| G[计算当天买入后的最大收益 curbuy]
+    G --> H[计算当天卖出后的最大收益 cursell]
+    H --> I[更新bestbuy和bestsell]
+    I --> E
+    F -->|Yes| J[返回bests]
