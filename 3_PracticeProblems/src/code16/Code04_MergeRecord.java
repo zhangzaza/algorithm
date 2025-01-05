@@ -120,6 +120,8 @@ public class Code04_MergeRecord {
 		int mid = L + ((R - L) >> 1);
 		process(originArr, L, mid, power - 1, record);
 		process(originArr, mid + 1, R, power - 1, record);
+
+		// 信息填写在record 的 power 位置上，8就写在3位置，16就写在4位置
 		record[power] += merge(originArr, L, mid, R);
 	}
 

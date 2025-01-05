@@ -6,7 +6,6 @@ package code16;
 /// 从编号 0 的人开始报数，报到 m 的人出圈，下一个人接着从 0 开始报数，如此循环，直到只剩下一个人，求最后剩下的人的编号。
 ///
 /// 2. 示例
-///
 /// 示例 1：
 /// 输入：n = 5，m = 2
 /// 输出：3
@@ -25,7 +24,7 @@ package code16;
 /// 0 <= m < n
 public class Code05_JosephusProblem {
 
-	// 提交直接通过
+	/// 1.y=x%m 的方法
 	// 给定的编号是0~n-1的情况下，数到m就杀
 	// 返回谁会活？
 	public int lastRemaining1(int n, int m) {
@@ -38,13 +37,13 @@ public class Code05_JosephusProblem {
 		if (n == 1) {
 			return 1;
 		}
-		return (getLive(n - 1, m) + m - 1) % n + 1;
+		return (getLive(n - 1, m) + m - 1) % n + 1;// getLive(n - 1, m)  杀之后的编号
 	}
 
 	// 提交直接通过
 	// 给定的编号是0~n-1的情况下，数到m就杀
 	// 返回谁会活？
-	// 这个版本是迭代版
+	/// 2.迭代版本
 	public int lastRemaining2(int n, int m) {
 		int ans = 1;
 		int r = 1;
@@ -136,7 +135,6 @@ public class Code05_JosephusProblem {
 		printCircularList(head2);
 		head2 = josephusKill2(head2, 3);
 		printCircularList(head2);
-
 	}
 
 }
