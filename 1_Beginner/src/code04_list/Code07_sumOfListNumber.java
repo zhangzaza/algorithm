@@ -19,8 +19,8 @@ public class Code07_sumOfListNumber {
         int len1=listLength(head1);
         int len2=listLength(head2);
         //区分长短节点
-        ListNode l = len1 >= len2?head1:head1;
-        ListNode s = l == head1 ?head1:head1;
+        ListNode l = len1 >= len2?head1:head2;
+        ListNode s = l == head1 ?head2:head1;
 
         ListNode curL=l;
         ListNode curS=s;

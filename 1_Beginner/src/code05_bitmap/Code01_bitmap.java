@@ -23,12 +23,15 @@ public class Code01_bitmap {
     //delete 就是 取反 再 &1
     //contains 就是查看是否包含
 
+
+    //存储的数字从1开始
+
     public static class BitMap{
 
         private long[] bits;
 
         public BitMap(int max){
-            bits = new long[(max+64)>>6];
+            bits = new long[(max+64)>>6]; //就是除以64
         }
 
         public void add(int num){
@@ -45,5 +48,41 @@ public class Code01_bitmap {
 
     }
 
+    public class BitMap2 {
+        // 用于存储位信息的数组，每个long元素可以存储64位
+        private long[] bits;
 
+        public BitMap2(int max) {
+            // 计算需要多少个long元素来存储从1到max的所有位信息
+            // (max + 64 - 1) / 64 等价于 (max + 64) >> 6，确保能容纳所有可能的位
+            bits = new long[(max + 64 - 1) / 64];
+        }
+
+        public void add(int num) {
+            // 计算num应该存储在bits数组中的哪个索引位置
+            int arrayIndex = (num - 1) / 64;
+            // 计算num在long元素中的具体位位置
+            int bitIndex = (num - 1) % 64;
+            // 将对应的位设置为1，表示num存在
+            bits[arrayIndex] |= 1 << bitIndex;
+        }
+
+        public void delete(int num) {
+            // 计算num在bits数组中的索引位置
+            int arrayIndex = (num - 1) / 64;
+            // 计算num在long元素中的具体位位置
+            int bitIndex = (num - 1) % 64;
+            // 将对应的位设置为0，表示num不存在
+            bits[arrayIndex] &= ~(1L << bitIndex);
+        }
+
+        public boolean contains(int num) {
+            // 计算num在bits数组中的索引位置
+            int arrayIndex = num / 64;
+            // 计算num在long元素中的具体位位置
+            int bitIndex = num % 64;
+            // 检查对应的位是否为1，如果是则表示num存在
+            return (bits[arrayIndex] & (1L << bitIndex)) == 1;
+        }
+    }
 }

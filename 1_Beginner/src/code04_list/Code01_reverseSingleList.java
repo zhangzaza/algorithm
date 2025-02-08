@@ -6,7 +6,10 @@ public class Code01_reverseSingleList {
     //如果调用了 其他方法，并且是一个引用对象，传进去的只是一个引用，不会改变原来的值
     //例子 ： 我在外面定义了 Node（1）为node ，然后node传进去后修改了值变成node（2），对于外部来说 node还是还是Node（1）
 
-    /*拿纸画一下*/
+    /*
+    拿纸画一下
+    这里是真的直接画图就可以
+    */
 
     public static Node reverseList(Node head){
         Node pre = null;

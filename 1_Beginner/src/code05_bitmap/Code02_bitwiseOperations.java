@@ -13,7 +13,7 @@ public class Code02_bitwiseOperations {
         int carry = (a & b) <<1;
         while (carry != 0){
             uintSum = sum ^ carry; // 无进位相加信息
-            carry =  (uintSum& carry)<<1; //进位信息
+            carry =  (sum& carry)<<1; //进位信息
             sum =uintSum;//无进位相加信息
         }
 
@@ -88,6 +88,9 @@ public class Code02_bitwiseOperations {
     public static boolean isNeg(int a) {
         return a<0;
     }
+
+
+
     /*取绝对值*/
     public static int negNum(int a) {
         if (isNeg(a)) {

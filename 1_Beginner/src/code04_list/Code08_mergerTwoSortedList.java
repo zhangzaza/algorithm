@@ -16,7 +16,7 @@ public class Code08_mergerTwoSortedList {
             return l1 == null ? l2 : l1;
         }
 
-        ListNode head = l1.value >= l2.value ? l1 : l2;
+        ListNode head = l1.value <= l2.value ? l1 : l2;
         ListNode cur1 = head.next;
         ListNode cur2 = head == l1 ? l2 : l1;
         ListNode pre = head;
@@ -34,10 +34,10 @@ public class Code08_mergerTwoSortedList {
         }
 
         //两个中有一个遍历结束跳出了循环
-        pre.next = cur1 == null ? l2 : l1;
+        //因为是一个一个往后塞的，所以肯定会有一个剩下的
+        pre.next = cur1 == null ? cur2 : cur1;
 
         return head;
-
     }
 
 

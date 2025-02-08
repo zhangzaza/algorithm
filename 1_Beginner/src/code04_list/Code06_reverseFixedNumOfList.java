@@ -45,7 +45,6 @@ public class Code06_reverseFixedNumOfList {
 
         }
         return head;
-
     }
 
 

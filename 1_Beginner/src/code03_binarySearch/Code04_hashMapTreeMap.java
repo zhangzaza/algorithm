@@ -81,11 +81,11 @@ public class Code04_hashMapTreeMap {
         //<=5 离5最近的key告诉我
         System.out.println(treeMap.floorKey(5));
         //<=6 离6最近的key告诉我
-        System.out.println(treeMap.floorKey(5));
+        System.out.println(treeMap.floorKey(6));
         //>=5 离5最近的key告诉我
         System.out.println(treeMap.ceilingKey(5));
         //>=6 离6最近的key告诉我
-        System.out.println(treeMap.ceilingKey(5));
+        System.out.println(treeMap.ceilingKey(6));
 
         Node node3 =new Node(3);
         Node node4 =new Node(4);

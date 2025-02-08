@@ -11,13 +11,14 @@ package code03_binarySearch;
 public class Code03_rangeMin {
 
     public static void main(String[] args) {
-        int maxLen =100;
-        int maxValue  = 200;
-        int testTime =1000000;
+        int maxLen =10;
+        int maxValue  = 20;
+        int testTime =100;
         System.out.println("测试开始");
         for (int i = 0; i < testTime; i++) {
             int[] arr = ranArray(maxLen, maxValue);
-            int ans = rangeMinNumber(arr);
+            //int ans = rangeMinNumber(arr);
+            int ans = rangeMinNumber2(arr);
             if (!check(arr,ans)) {
                 printArray(arr);
                 System.out.println(ans);
@@ -66,13 +67,50 @@ public class Code03_rangeMin {
         return arr[left] <arr[right] ? left : right;
     }
 
+    public static int rangeMinNumber2(int[] arr) {
+        int ans=-1;
+        if(arr.length==0)return ans;
+
+        if (arr.length==1)return 0;
+
+        if (arr.length==2)return arr[0]<arr[1]?0:1;
+
+        if (arr[0]<arr[1])return 0;
+
+        if (arr[arr.length-1]<arr[arr.length-2])return arr.length-1;
+
+        int left =0;
+        int right = arr.length-1;
+        while (left<=right){
+            int mid = (right+left)/2;
+            if(arr[mid]>arr[mid-1]){
+                if (arr[mid-1]<arr[mid-2])return mid-1;
+                ans = mid;
+                right = mid-1;
+            }else {
+                if (arr[mid]<arr[mid+1])return mid;
+                ans = mid;
+                left = mid+1;
+            }
+
+        }
+        return ans;
+
+    }
+
 
     //生成一个无序相邻不相等的数组
     public static int[] ranArray(int maxLen, int maxValue) {
         int length = (int) (maxLen * Math.random());
+        if (length <= 0) {
+            return new int[0];
+        }
         int[] arr = new int[length];
         arr[0] = (int) (maxValue * Math.random());
-        for (int i = 0; i < length; i++) {
+        if (length == 1) {
+            return arr;
+        }
+        for (int i = 1; i < length; i++) {
             do {
                 arr[i] = (int) (maxValue * Math.random());
             } while (arr[i] == arr[i - 1]);
